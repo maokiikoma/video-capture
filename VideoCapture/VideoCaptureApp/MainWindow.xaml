@@ -4,22 +4,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VideoCaptureApp"
+        xmlns:viewModel="clr-namespace:VideoCaptureApp.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <!--<Window.DataContext>
+        <viewModel:MainWindowViewModel />
+    </Window.DataContext>-->
+
     <Grid>
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="select file" Margin="5"/>
-                <TextBox x:Name="textBoxFileName" Width="200px" Margin="10"/>
-                <Button Content="FileOpen" Click="Button_Click"/>
+            <Label Content="動画から画像抽出ツール" FontSize="25" Margin="0 0 0 20"/>
+
+            <StackPanel Orientation="Vertical">
+                <Label Content="動画ファイル選択" Margin="5 0 0 0"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="TextBoxFileName" 
+                             Text="{Binding FileName}"
+                             Width="300px" HorizontalAlignment="Left" Margin="10 0 5 0"/>
+                    <Button Content="ファイル選択" 
+                            Command="{Binding FileSelectCommand}"
+                            HorizontalAlignment="Left" />
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 10 0 10">
-                <Label Content="out path" Margin="5"/>
-                <TextBox x:Name="textBoxOutPath" Width="200px" Text="C:\Users\user\Pictures\capture"/>
-                <Label Content="interval" Margin="5"/>
-                <TextBox x:Name="textBoxInterval" Width="50px" Text="200"/>
+            <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+                <Label Content="画像出力先フォルダ" Margin="5 0 0 0"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="TextBoxOutPath" 
+                             Text="{Binding OutPath}"
+                             Width="300px" HorizontalAlignment="Left" Margin="10 0 5 0"/>
+                    <Button Content="フォルダ選択" 
+                            Command="{Binding FolderSelectCommand}"
+                            HorizontalAlignment="Left"/>
+                </StackPanel>
             </StackPanel>
-            <Button x:Name="Submit" Content="submit" Click="Submit_Click" Width="100" Height="50"/>
+
+            <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+                <Label Content="画像を抽出する間隔(ミリ秒)" HorizontalAlignment="Left" Margin="5 0 0 0"/>
+                <TextBox x:Name="TextBoxInterval" 
+                         Text="{Binding Interval}"
+                         Width="50px" HorizontalAlignment="Left" Margin="10 0 0 0" />
+            </StackPanel>
+            <Button x:Name="Submit" Content="開始" 
+                    Command="{Binding StartCommand}"
+                    Width="100" Height="30" HorizontalAlignment="Left" Margin="10 10 0 0"/>
+
+            <Label Content="{Binding ErrorMessage}" Foreground="Red" Margin="10 10 0 0"/>
         </StackPanel>
     </Grid>
 </Window>
