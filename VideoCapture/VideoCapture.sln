@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoCapture", "VideoCapture\VideoCapture.csproj", "{87FD6847-9EDF-4608-B900-E2EBE80F3EDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoCapture", "VideoCapture\VideoCapture.csproj", "{87FD6847-9EDF-4608-B900-E2EBE80F3EDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoCaptureApp", "VideoCaptureApp\VideoCaptureApp.csproj", "{8797492E-AF66-43B5-A52B-114B5F1D4020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoCaptureApp", "VideoCaptureApp\VideoCaptureApp.csproj", "{8797492E-AF66-43B5-A52B-114B5F1D4020}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib", "Lib\Lib.csproj", "{2D81DDA4-D3BD-465B-93F1-6523AF9D585C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoCaptureLib", "VideoCaptureLib\VideoCaptureLib.csproj", "{2D81DDA4-D3BD-465B-93F1-6523AF9D585C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

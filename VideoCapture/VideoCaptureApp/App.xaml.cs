@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Lib;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VideoCaptureApp.Services;
@@ -47,6 +48,7 @@ namespace VideoCaptureApp
             services.AddTransient<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<IVideoCaptureService, VideoCaptureService>();
+            services.AddSingleton<IVideoLib, VideoLib>();
         }
     }
 }

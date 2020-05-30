@@ -7,6 +7,7 @@ using Lib;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using VideoCaptureApp.Services;
+using Forms = System.Windows.Forms;
 
 namespace VideoCaptureApp.ViewModel
 {
@@ -23,7 +24,7 @@ namespace VideoCaptureApp.ViewModel
             set { SetProperty(ref _fileName, value); }
         }
 
-        private string _outPath = @"C:\Users\user\Pictures\capture";
+        private string _outPath = @"C:\Users\masaaoki\Pictures\capture";
         public string OutPath
         {
             get { return _outPath; }
@@ -93,17 +94,25 @@ namespace VideoCaptureApp.ViewModel
 
         private void ExecuteFolderSelect()
         {
-            var dlg = new CommonOpenFileDialog
-            {
-                IsFolderPicker = true,
-                Title = "フォルダを選択してください",
-                InitialDirectory = OutPath
-            };
+            var dlg = new Forms.FolderBrowserDialog();
+            dlg.Description = "フォルダーを選択してください。";
 
-            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            if (dlg.ShowDialog() == Forms.DialogResult.OK)
             {
-                OutPath = dlg.FileName;
+                OutPath = dlg.SelectedPath;
             }
+
+            //var dlg = new CommonOpenFileDialog
+            //{
+            //    IsFolderPicker = true,
+            //    Title = "フォルダを選択してください",
+            //    InitialDirectory = OutPath
+            //};
+
+            //if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            //{
+            //    OutPath = dlg.FileName;
+            //}
         }
 
         private void ExecuteStart()
@@ -121,6 +130,7 @@ namespace VideoCaptureApp.ViewModel
             if (result.Result)
             {
                 MessageBox.Show("正常終了しました。", "(^O^)", MessageBoxButton.OK, MessageBoxImage.Information);
+                Process.Start("explorer.exe", OutPath);
             }
             else
             {

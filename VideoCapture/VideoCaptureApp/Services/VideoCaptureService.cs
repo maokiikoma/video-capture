@@ -1,13 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Lib;
 
 namespace VideoCaptureApp.Services
 {
     public class VideoCaptureService : IVideoCaptureService
     {
+        private readonly IVideoLib _videoLib;
+
+        public VideoCaptureService(IVideoLib videoLib)
+        {
+            _videoLib = videoLib;
+        }
+
         public (bool result, string message) Validate(string fileName, string outPath, string interval)
         {
             if (string.IsNullOrWhiteSpace(fileName))
@@ -37,8 +42,7 @@ namespace VideoCaptureApp.Services
         {
             try
             {
-                var lib = new VideoLib();
-                lib.Exec(fileName, outPath, int.Parse(interval));
+                _videoLib.ExtractImage(fileName, outPath, int.Parse(interval));
 
                 return ServiceResultModel.CreateOkResult();
             }
