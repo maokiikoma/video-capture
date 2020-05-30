@@ -6,6 +6,10 @@
         xmlns:local="clr-namespace:VideoCaptureApp"
         xmlns:viewModel="clr-namespace:VideoCaptureApp.ViewModel"
         mc:Ignorable="d"
+        xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         Title="MainWindow" Height="450" Width="800">
 
     <!--<Window.DataContext>
