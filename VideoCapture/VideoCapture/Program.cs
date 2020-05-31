@@ -35,7 +35,7 @@ namespace VideoCapture
                 }
 
                 var lib = new VideoLib();
-                lib.Exec(fullFileName, outPath, interval);
+                lib.ExtractImage(fullFileName, outPath, interval);
             }
             catch (Exception ex)
             {

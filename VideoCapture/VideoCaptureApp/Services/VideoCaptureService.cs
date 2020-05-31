@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using Lib;
 
 namespace VideoCaptureApp.Services
@@ -20,9 +21,19 @@ namespace VideoCaptureApp.Services
                 return (false, "動画ファイルを指定してください。");
             }
 
+            if (!File.Exists(fileName))
+            {
+                return (false, "指定された動画ファイルは存在しません。");
+            }
+
             if (string.IsNullOrWhiteSpace(outPath))
             {
                 return (false, "画像出力先フォルダを指定してください。");
+            }
+
+            if (!Directory.Exists(outPath))
+            {
+                return (false, "指定された画像出力先フォルダは存在しません。");
             }
 
             if (string.IsNullOrWhiteSpace(interval))

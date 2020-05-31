@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lib\VideoCaptureLib.csproj" />
+    <ProjectReference Include="..\VideoCaptureLib\VideoCaptureLib.csproj" />
   </ItemGroup>
 
 </Project>

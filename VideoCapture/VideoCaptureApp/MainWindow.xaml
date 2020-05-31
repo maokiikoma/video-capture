@@ -20,6 +20,8 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         WindowTransitionsEnabled="False"
         GlowBrush="{DynamicResource AccentColorBrush}"
+                      
+        xmlns:Mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         
         Icon="/Image/icon.jpg"
         Title="ツール" Height="600" Width="800">
@@ -32,7 +34,14 @@
         <viewModel:MainWindowViewModel />
     </Window.DataContext>-->
 
+    <Window.Resources>
+        <ResourceDictionary Source="/MyStyle.xaml"/>
+    </Window.Resources>
+
     <Grid>
+        <Rectangle Height="700" Width="800" Style="{StaticResource rec-overlay}" Visibility="{Binding OverRayVisibility, Mode=TwoWay}" Margin="0 0 0 0" />
+        <Mah:ProgressRing Style="{StaticResource pgr-normal}" IsActive="{Binding LodingIsActive, Mode=TwoWay}"/>
+        
         <StackPanel Orientation="Vertical">
             <Label Content="動画から画像抽出ツール" FontSize="25" Margin="0 0 0 20"/>
 

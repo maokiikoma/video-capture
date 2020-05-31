@@ -45,6 +45,20 @@ namespace VideoCaptureApp.ViewModel
             set { SetProperty(ref _errorMessage, value); }
         }
 
+        private bool _lodingIsActive = false;
+        public bool LodingIsActive
+        {
+            get { return _lodingIsActive; }
+            set { SetProperty(ref _lodingIsActive, value); }
+        }
+
+        private Visibility _overRayVisibility = Visibility.Collapsed;
+        public Visibility OverRayVisibility
+        {
+            get { return _overRayVisibility; }
+            set { SetProperty(ref _overRayVisibility, value); }
+        }
+
         #endregion
 
         #region command
@@ -86,10 +100,6 @@ namespace VideoCaptureApp.ViewModel
             {
                 FileName = dialog.FileName;
             }
-            else
-            {
-                FileName = "キャンセルされました";
-            }
         }
 
         private void ExecuteFolderSelect()
@@ -101,30 +111,24 @@ namespace VideoCaptureApp.ViewModel
             {
                 OutPath = dlg.SelectedPath;
             }
-
-            //var dlg = new CommonOpenFileDialog
-            //{
-            //    IsFolderPicker = true,
-            //    Title = "フォルダを選択してください",
-            //    InitialDirectory = OutPath
-            //};
-
-            //if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
-            //{
-            //    OutPath = dlg.FileName;
-            //}
         }
 
         private void ExecuteStart()
         {
+            ToggleProgressRing(); // TODO aoki メッセージボックスを出さないとローディングが表示されない
             ErrorMessage = null;
 
             var (validResult, errorMessage) = _videoCaptureService.Validate(FileName, OutPath, Interval);
             if (!validResult)
             {
                 DoErrorProc(errorMessage, "( ﾉД`)");
+
+                ToggleProgressRing();
+
                 return;
             }
+
+            //ToggleProgressRing();
 
             var result = _videoCaptureService.Capture(FileName, OutPath, Interval);
             if (result.Result)
@@ -136,12 +140,32 @@ namespace VideoCaptureApp.ViewModel
             {
                 DoErrorProc(result.ErrorMessage, "(T ^ T)");
             }
+
+            ToggleProgressRing();
         }
 
         private void DoErrorProc(string errorMessage, string caption)
         {
             MessageBox.Show(errorMessage, caption, MessageBoxButton.OK, MessageBoxImage.Warning);
             ErrorMessage = errorMessage;
+        }
+
+        /// <summary>
+        /// 処理中イメージの表示／非表示切り替え
+        /// 
+        /// </summary>
+        private void ToggleProgressRing()
+        {
+            if (LodingIsActive)
+            {
+                LodingIsActive = false;
+                OverRayVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                LodingIsActive = true;
+                OverRayVisibility = Visibility.Visible;
+            }
         }
 
         #endregion
