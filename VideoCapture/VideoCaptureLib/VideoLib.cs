@@ -27,15 +27,27 @@ namespace Lib
 
                 for (int i = 0; i < capturCount; i++)
                 {
+                    try
+                    {
+                        Debug.WriteLine($"currentCaptureCount: {currentCaptureCount}");
 
-                    //Debug.WriteLine($"currentCaptureCount: {currentCaptureCount}");
+                        var currentTime = TimeSpan.FromMilliseconds(i * interval);
+                        capture.Set(VideoCaptureProperties.PosFrames, currentCaptureCount);
+                        capture.Read(img);
+                        img.SaveImage(Path.Combine(outPath, $"{fileName}_{currentTime:hh\\-mm\\-ss\\-fff}.png"));
 
-                    var currentTime = TimeSpan.FromMilliseconds(i * interval);
-                    capture.Set(VideoCaptureProperties.PosFrames, currentCaptureCount);
-                    capture.Read(img);
-                    img.SaveImage(Path.Combine(outPath, $"{fileName}_{currentTime:hh\\-mm\\-ss\\-fff}.png"));
-
-                    currentCaptureCount += (int)Math.Round(frameAdditionCount);
+                        currentCaptureCount += (int)Math.Round(frameAdditionCount);
+                    }
+                    catch (OpenCVException ex)
+                    {
+                        if (ex.Message == "!_img.empty()")
+                        {
+                            Debug.WriteLine("skip. empty image frame.");
+                            currentCaptureCount += (int)Math.Round(frameAdditionCount);
+                            continue;
+                        }
+                        throw;
+                    }
                 }
             }
 
