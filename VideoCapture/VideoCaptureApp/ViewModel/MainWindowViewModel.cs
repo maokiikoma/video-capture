@@ -128,13 +128,10 @@ namespace VideoCaptureApp.ViewModel
 
             ToggleProgressRing();
 
-            //await Task.Yield();
-
-            //var result = _videoCaptureService.Capture(FileName, OutPath, Interval);
             var result = await _videoCaptureService.CaptureAsync(FileName, OutPath, Interval);
             if (result.Result)
             {
-                MessageBox.Show("正常終了しました。", "(^O^)", MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show("正常終了しました。", "(^O^)", MessageBoxButton.OK, MessageBoxImage.Information);
                 Process.Start("explorer.exe", OutPath);
             }
             else

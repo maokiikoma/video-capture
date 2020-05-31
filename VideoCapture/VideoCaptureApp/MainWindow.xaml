@@ -26,14 +26,6 @@
         Icon="/Image/icon.jpg"
         Title="ツール" Height="600" Width="800">
 
-    <!--WindowTransitionsEnabled="False"        
-        GlowBrush="{DynamicResource AccentColorBrush}"-->
-    <!--FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"-->
-
-    <!--<Window.DataContext>
-        <viewModel:MainWindowViewModel />
-    </Window.DataContext>-->
-
     <Window.Resources>
         <ResourceDictionary Source="/MyStyle.xaml"/>
     </Window.Resources>
