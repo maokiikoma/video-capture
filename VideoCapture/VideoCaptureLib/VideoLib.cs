@@ -11,33 +11,55 @@ namespace Lib
         {
             Debug.WriteLine("capture start");
 
-            try
+            Debug.WriteLine($"fullPathfileName: {fullPathfileName}");
+            Debug.WriteLine($"outPath: {outPath}");
+            Debug.WriteLine($"interval: {interval} millisec");
+
+            var fileName = Path.GetFileName(fullPathfileName);
+
+            using (var img = new Mat())
+            using (var capture = new VideoCapture(fullPathfileName))
             {
-                var fileName = Path.GetFileName(fullPathfileName);
+                var frameCount = capture.FrameCount;
+                var fps = capture.Fps;
+                var secCount = frameCount / fps;
+                var capturCount = 1000 / interval * secCount;
+                var frameAdditionCount = frameCount / capturCount;
 
-                using (var img = new Mat())
-                using (var capture = new VideoCapture(fullPathfileName))
+                Debug.WriteLine($"FrameCount: {frameCount}");
+                Debug.WriteLine($"FPS: {fps}");
+                Debug.WriteLine($"SecCount: {secCount}");
+                Debug.WriteLine($"capturCount: {capturCount}");
+                Debug.WriteLine($"frameAdditionCount: {frameAdditionCount}");
+
+                var currentCaptureCount = 0;
+
+                for (int i = 0; i < capturCount; i++)
                 {
-                    capture.PosFrames = capture.FrameCount - 2;
-                    var lastMs = capture.PosMsec * 1000;
-
-                    for (int posMs = 0; posMs < lastMs; posMs += interval)
+                    try
                     {
-                        capture.PosMsec = posMs;
+                        capture.Set(VideoCaptureProperties.PosFrames, currentCaptureCount);
                         capture.Read(img);
-                        img.SaveImage(
-                            Path.Combine(
-                                outPath,
-                                $"{fileName}_{new TimeSpan(0, 0, 0, 0, posMs):hh\\hmm\\mss\\sfff\\m\\s}.png"));
+                        Debug.WriteLine($"currentCaptureCount: {currentCaptureCount}");
+                        img.SaveImage(Path.Combine(outPath, $"{fileName}_{currentCaptureCount}.png"));
+
+                        currentCaptureCount += (int)Math.Round(frameAdditionCount);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message == "!_img.empty()")
+                        {
+                            Debug.WriteLine(ex.Message);
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                 }
+            }
 
-                Debug.WriteLine("end.");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            Debug.WriteLine("end.");
         }
     }
 }

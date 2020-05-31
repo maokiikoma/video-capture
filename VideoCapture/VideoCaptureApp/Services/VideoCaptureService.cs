@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Lib;
 
 namespace VideoCaptureApp.Services
@@ -54,6 +55,21 @@ namespace VideoCaptureApp.Services
             try
             {
                 _videoLib.ExtractImage(fileName, outPath, int.Parse(interval));
+
+                return ServiceResultModel.CreateOkResult();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return ServiceResultModel.CreateErrorResult("Error");
+            }
+        }
+
+        public async Task<ServiceResultModel> CaptureAsync(string fileName, string outPath, string interval)
+        {
+            try
+            {
+                await Task.Run(() => _videoLib.ExtractImage(fileName, outPath, int.Parse(interval)));
 
                 return ServiceResultModel.CreateOkResult();
             }

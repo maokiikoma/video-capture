@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using Lib;
 using Microsoft.Win32;
@@ -113,9 +114,8 @@ namespace VideoCaptureApp.ViewModel
             }
         }
 
-        private void ExecuteStart()
+        private async void ExecuteStart()
         {
-            ToggleProgressRing(); // TODO aoki メッセージボックスを出さないとローディングが表示されない
             ErrorMessage = null;
 
             var (validResult, errorMessage) = _videoCaptureService.Validate(FileName, OutPath, Interval);
@@ -123,14 +123,15 @@ namespace VideoCaptureApp.ViewModel
             {
                 DoErrorProc(errorMessage, "( ﾉД`)");
 
-                ToggleProgressRing();
-
                 return;
             }
 
-            //ToggleProgressRing();
+            ToggleProgressRing();
 
-            var result = _videoCaptureService.Capture(FileName, OutPath, Interval);
+            //await Task.Yield();
+
+            //var result = _videoCaptureService.Capture(FileName, OutPath, Interval);
+            var result = await _videoCaptureService.CaptureAsync(FileName, OutPath, Interval);
             if (result.Result)
             {
                 MessageBox.Show("正常終了しました。", "(^O^)", MessageBoxButton.OK, MessageBoxImage.Information);
